@@ -1,0 +1,371 @@
+/* CSS RESET: Zet standaardmarges, paddings en fonts gelijk */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+    .ronde-foto {
+      width: 100px;         /* pas aan naar gewenste breedte */
+      height: 100px;        /* pas aan naar gewenste hoogte */
+      object-fit: cover;    /* zorgt dat de foto mooi gevuld is */
+      border-radius: 25px;  /* pas waarde aan voor meer/minder rond */
+      /* Voor helemaal rond (cirkel): border-radius: 50%; */
+    }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #181c20;
+  color: #e0e6ed;
+}
+
+#meos-app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: #27496d;
+  color: #fff;
+  width: 220px;
+  padding: 24px 0;
+  box-shadow: 2px 0 10px #0003;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+  margin-bottom: 32px;
+  letter-spacing: 2px;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 12px;
+}
+
+.sidebar button {
+  background: #142850;
+  color: #fff;
+  border: none;
+  padding: 12px 16px;
+  margin: 0 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.sidebar button:hover, .sidebar button.active {
+  background: #00909e;
+}
+
+main {
+  flex: 1;
+  padding: 36px 48px;
+  background: #222831;
+  min-width: 0;
+}
+
+.page {
+  display: none;
+  max-width: 640px;
+}
+
+.page.active {
+  display: block;
+}
+
+input[type="text"], input[type="number"], input[type="date"], input[type="password"], select {
+  background: #212c3a;
+  color: #e0e6ed;
+  border: 1px solid #30475e;
+  border-radius: 3px;
+  padding: 9px 14px;
+  font-size: 15px;
+  margin-bottom: 7px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button[type="submit"], button[type=button] {
+  background: #00909e;
+  color: #fff;
+  border: none;
+  padding: 9px 16px;
+  border-radius: 3px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background .2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button[type="submit"]:hover, button[type=button]:hover {
+  background: #16a6b1;
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.password-wrapper input[type="password"],
+.password-wrapper input[type="text"] {
+  margin-right: 0;
+  flex: 1 1 0%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pw-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 27px;
+  height: 24px;
+  background: url('data:image/svg+xml;utf8,<svg fill="none" stroke="gray" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><ellipse cx="12" cy="12" rx="9" ry="6"/><circle cx="12" cy="12" r="2.5"/></svg>') no-repeat center/20px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.pw-toggle.showing {
+  background: url('data:image/svg+xml;utf8,<svg fill="none" stroke="gray" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><ellipse cx="12" cy="12" rx="9" ry="6"/><circle cx="12" cy="12" r="2.5"/><line x1="4" y1="20" x2="20" y2="4" stroke="gray" stroke-width="2"/></svg>') no-repeat center/20px;
+  opacity: 1;
+}
+
+#login-screen {
+  width: 100vw;
+  height: 100vh;
+  background: url('https://cdn.discordapp.com/attachments/1378245756179185776/1378245817822871595/Kmar_1.png?ex=683be6f1&is=683a9571&hm=e6f5174dea07df12cdea695fb17f13385ed506c103cd3b617319e18c4242fca5&') center center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#login-form {
+  background: rgba(34, 40, 49, 0.93);
+  padding: 36px 36px 24px 36px;
+  border-radius: 8px;
+  box-shadow: 0 0 30px #000a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 320px;
+  width: 340px;
+  box-sizing: border-box;
+}
+
+.login-field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-bottom: 14px;
+}
+
+.login-field label {
+  font-size: 14px;
+  color: #b2f7ef;
+  margin-bottom: 4px;
+  margin-left: 2px;
+  font-weight: bold;
+}
+
+#login-form input[type="text"], #login-form input[type="password"] {
+  width: 100%;
+  margin-bottom: 0;
+  text-align: left;
+}
+
+#login-form .password-wrapper {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+#login-form button[type="submit"] {
+  width: 100%;
+}
+
+.login-error {
+  color: #ff4444;
+  font-size: 15px;
+  margin-top: 10px;
+  min-height: 18px;
+  text-align: center;
+}
+
+.login-hint {
+  margin-top: 16px;
+  font-size: 13px;
+  color: #9aa;
+  width: 100%;
+  text-align: center;
+}
+
+#user-info {
+  margin-top: 24px;
+  font-size: 16px;
+  color: #b2f7ef;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+li {
+  background: #30475e;
+  margin: 7px 0;
+  padding: 10px 16px;
+  border-radius: 3px;
+  word-break: break-all;
+}
+
+li .delete-btn {
+  float:right;
+  background: #b80000;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  padding: 2px 10px;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+#account-lijst li {
+  background: #263447;
+  margin: 7px 0;
+  padding: 10px 16px;
+  border-radius: 3px;
+  word-break: break-all;
+}
+
+#account-lijst .delete-btn {
+  background: #b80000;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  padding: 2px 10px;
+  margin-left: 8px;
+  cursor: pointer;
+  float: right;
+}
+
+#account-lijst .delete-btn:disabled {
+  background: #999;
+  cursor: not-allowed;
+}
+
+#account-lijst .account-rol {
+  color: #00ffd0;
+  margin-left: 8px;
+}
+
+#account-lijst .account-self {
+  font-style: italic;
+  color: #aaa;
+}
+
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+  background-color: #222831;
+  margin: 5% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 420px;
+  color: #e0e6ed;
+  position: relative;
+  box-shadow: 0 0 30px #000a;
+}
+
+.close {
+  color: #aaa;
+  position: absolute;
+  right: 20px;
+  top: 12px;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.close:hover { color: #fff; }
+
+#burger-modal-body ul { margin-top: 8px; }
+
+.burger-link {
+  color: #00ffd0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.burger-link:hover {
+  color: #16a6b1;
+}
+
+#toast-container {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.toast {
+  background: #222;
+  color: #fff;
+  padding: 14px 32px;
+  border-radius: 8px;
+  margin-top: 12px;
+  font-size: 17px;
+  box-shadow: 0 2px 16px #0008;
+  min-width: 180px;
+  text-align: center;
+  opacity: 0.95;
+  animation: toastIn .25s, toastOut .7s 2.3s forwards;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(24px);}
+  to   { opacity: 0.95; transform: translateX(-50%) translateY(0);}
+}
+@keyframes toastOut {
+  to { opacity: 0; }
+}
+.change-btn {
+  margin-left: 8px;
+  background: #ffaa00;
+  color: #222;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.change-btn:hover {
+  background: #ffc14d;
+}

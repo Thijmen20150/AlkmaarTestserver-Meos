@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Meos - Alkmaar Roleplay</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="scr/Alkmaar.png">
+
+
+</head>
+
+<body>
+  <div id="login-screen">
+    <form id="login-form" onsubmit="event.preventDefault(); login();">
+      <h1>MEOS Login</h1>
+      <div class="login-field">
+        <label for="login-username">Gebruikersnaam</label>
+        <input type="text" id="login-username" placeholder="Gebruikersnaam" required autocomplete="username">
+      </div>
+      <div class="login-field">
+        <label for="login-password">Wachtwoord</label>
+        <div class="password-wrapper">
+          <input type="password" id="login-password" placeholder="Wachtwoord" required autocomplete="current-password">
+          <span class="pw-toggle" id="pw-toggle-login"
+            onclick="togglePassword('login-password','pw-toggle-login')"></span>
+        </div>
+      </div>
+      <button type="submit" style="margin-top:15px;">Inloggen</button>
+      <div id="login-error" class="login-error"></div>
+      <p class="login-hint">
+        admin / admin123<br>
+        pol / pol123
+      </p>
+      <script>// Voeg hier je achtergrondafbeeldingen toe
+        const backgrounds = [
+          'https://cdn.discordapp.com/attachments/1378245756179185776/1378245817822871595/Kmar_1.png?ex=683be6f1&is=683a9571&hm=e6f5174dea07df12cdea695fb17f13385ed506c103cd3b617319e18c4242fca5&',
+          // Voeg eventueel meer afbeeldingen toe
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+          const bgDiv = document.querySelector('.background');
+          const randomImg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+          bgDiv.style.backgroundImage = `url('${randomImg}')`;
+        });</script>
+    </form>
+  </div>
+  <div id="meos-app" style="display:none;">  
+    <aside class="sidebar">
+  <img src="scr/Alkmaar.png" alt="Beschrijving van foto" class="ronde-foto">
+      <h2>MEOS</h2>
+      <nav id="nav-menu"></nav>
+    </aside>
+    <main>
+      <section id="dashboard" class="page active">
+        <h1>Welkom bij het MEOS-systeem</h1>
+        <p>Kies een functie in het menu.</p>
+        <div id="user-info"></div>
+      </section>
+      <!-- ---- Kenteken ---- -->
+      <section id="kenteken" class="page">
+        <h1>Kentekencheck</h1>
+        <form onsubmit="event.preventDefault(); kentekenCheck();">
+          <input type="text" id="kenteken-input" placeholder="Voer kenteken in (bijv. AB-123-CD)" maxlength="8">
+          <button type="submit">Check</button>
+        </form>
+        <div id="kenteken-result"></div>
+      </section>
+      <!-- ---- Persoon ---- -->
+      <section id="persoon" class="page">
+        <h1>Persoonscheck</h1>
+        <form onsubmit="event.preventDefault(); persoonsCheck();">
+          <input type="text" id="naam-input" placeholder="Naam (bijv. Jan Jansen)">
+          <button type="submit">Check</button>
+        </form>
+        <ul id="burger-suggesties"></ul>
+        <div id="persoon-result"></div>
+      </section>
+      <!-- ---- Meldingen ---- -->
+      <section id="meldingen" class="page">
+        <h1>Meldingen</h1>
+        <form onsubmit="event.preventDefault(); meldingToevoegen();">
+          <input type="text" id="melding-titel" placeholder="Titel melding" required>
+          <input type="text" id="melding-omschrijving" placeholder="Omschrijving" required>
+          <button type="submit">Melding aanmaken</button>
+        </form>
+        <ul id="melding-lijst"></ul>
+      </section>
+      <!-- ---- Signaleringen ---- -->
+      <section id="signaleringen" class="page">
+        <h1>Signaleringen</h1>
+        <form onsubmit="event.preventDefault(); signaleringToevoegen();">
+          <input type="text" id="signa-type" placeholder="Type (Persoon/Voertuig)" required>
+          <input type="text" id="signa-info" placeholder="Naam/kenteken" required>
+          <button type="submit">Toevoegen</button>
+        </form>
+        <ul id="signalering-lijst"></ul>
+      </section>
+      <!-- ---- Boetes ---- -->
+      <section id="boetes" class="page">
+        <h1>Boete uitschrijven</h1>
+        <form onsubmit="event.preventDefault(); boeteToevoegen();">
+          <input type="text" id="boete-naam" placeholder="Naam burger" required>
+          <input type="text" id="boete-reden" placeholder="Reden" required>
+          <input type="number" id="boete-bedrag" placeholder="Bedrag (€)" min="1" required>
+          <button type="submit">Uitschrijven</button>
+        </form>
+        <h2>Uitgeschreven boetes</h2>
+        <ul id="boete-lijst"></ul>
+      </section>
+      <!-- ---- Burgers ---- -->
+      <section id="burgers" class="page">
+        <h1>Burgerregistratie / Wijzigen</h1>
+        <form onsubmit="event.preventDefault(); burgerToevoegen();">
+          <input type="text" id="burger-naam" placeholder="Naam" required>
+          <input type="date" id="burger-geboorte" required>
+          <button type="submit">Toevoegen/wijzigen</button>
+        </form>
+        <h2>Burgerdatabase</h2>
+        <input type="text" id="burger-zoek" placeholder="Zoek op naam..." oninput="zoekBurgers();">
+        <ul id="burger-lijst"></ul>
+      </section>
+      <!-- ---- Voertuigen ---- -->
+      <section id="voertuigen" class="page">
+        <h1>Voertuig toevoegen / verwijderen</h1>
+        <form onsubmit="event.preventDefault(); voertuigToevoegen();">
+          <input type="text" id="voertuig-kenteken" placeholder="Kenteken" maxlength="8" required>
+          <input type="text" id="voertuig-eigenaar" placeholder="Eigenaar" required>
+          <input type="text" id="voertuig-merk" placeholder="Merk" required>
+          <input type="text" id="voertuig-type" placeholder="Type" required>
+          <button type="submit">Toevoegen</button>
+        </form>
+        <h2>Voertuigendatabase</h2>
+        <input type="text" id="voertuig-zoek" placeholder="Zoek op kenteken of eigenaar..." oninput="zoekVoertuigen();">
+        <ul id="voertuig-lijst"></ul>
+      </section>
+      <!-- ---- Notities ---- -->
+      <section id="notities" class="page">
+        <h1>Notities / Aantekeningen</h1>
+        <form onsubmit="event.preventDefault(); notitieToevoegen();">
+          <input type="text" id="notitie-onderwerp" placeholder="Onderwerp (naam/kenteken/melding)" required>
+          <input type="text" id="notitie-inhoud" placeholder="Notitie" required>
+          <button type="submit">Toevoegen</button>
+        </form>
+        <input type="text" id="notitie-zoek" placeholder="Zoek op onderwerp..." oninput="zoekNotities();">
+        <ul id="notitie-lijst"></ul>
+      </section>
+      <!-- ---- Gebruikersbeheer ---- -->
+      <section id="gebruikers" class="page">
+        <h1>Gebruikersbeheer</h1>
+        <form onsubmit="event.preventDefault(); gebruikerToevoegen();">
+          <input type="text" id="gebruiker-naam" placeholder="Gebruikersnaam" required>
+          <select id="gebruiker-rol" required>
+            <option value="">Kies rol</option>
+            <option value="Agent">Agent</option>
+            <option value="Hoofd">Hoofd</option>
+            <option value="Admin">Admin</option>
+          </select>
+          <button type="submit">Toevoegen</button>
+        </form>
+        <h2>Gebruikerslijst</h2>
+        <input type="text" id="gebruiker-zoek" placeholder="Zoek op naam/rol..." oninput="zoekGebruikers();">
+        <ul id="gebruiker-lijst"></ul>
+      </section>
+      <!-- ---- Accountbeheer (admin) ---- -->
+      <section id="accounts" class="page">
+        <h1>Account aanmaken</h1>
+        <form onsubmit="event.preventDefault(); accountAanmaken();">
+          <input type="text" id="account-username" placeholder="Gebruikersnaam" required>
+          <div class="password-wrapper">
+            <input type="password" id="account-password" placeholder="Wachtwoord" required>
+            <span class="pw-toggle" id="pw-toggle-account"
+              onclick="togglePassword('account-password','pw-toggle-account')"></span>
+          </div>
+          <select id="account-rol" required>
+            <option value="">Kies rol</option>
+            <option value="Agent">Agent</option>
+            <option value="Hoofd">Hoofd</option>
+            <option value="Admin">Admin</option>
+          </select>
+          <button type="submit">Account aanmaken</button>
+        </form>
+        <div id="account-aanmaak-bericht" style="margin-top:12px;font-size:15px;"></div>
+        <h2 style="margin-top:28px;">Alle accounts</h2>
+        <ul id="account-lijst"></ul>
+      </section>
+      <!-- ---- Uitloggen ---- -->
+      <section id="uitloggen" class="page">
+        <h1>Uitloggen</h1>
+        <p>Je bent uitgelogd.</p>
+      </section>
+      <!-- ---- Burger modal ---- -->
+      <div id="burger-modal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeBurgerModal()">&times;</span>
+          <div id="burger-modal-body"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="meos.js"></script>
+  <div id="toast-container"></div>
+</body>
+
+</html>
